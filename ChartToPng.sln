@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2016
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChartToPng", "ChartToPng\ChartToPng.csproj", "{3C5D627D-E686-4866-A0A9-DA500BBD5CC5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChartToPng", "ChartToPng\ChartToPng.csproj", "{B089FAD8-38D4-4E70-A3C3-3CE5151ABB64}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3C5D627D-E686-4866-A0A9-DA500BBD5CC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3C5D627D-E686-4866-A0A9-DA500BBD5CC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3C5D627D-E686-4866-A0A9-DA500BBD5CC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3C5D627D-E686-4866-A0A9-DA500BBD5CC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B089FAD8-38D4-4E70-A3C3-3CE5151ABB64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B089FAD8-38D4-4E70-A3C3-3CE5151ABB64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B089FAD8-38D4-4E70-A3C3-3CE5151ABB64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B089FAD8-38D4-4E70-A3C3-3CE5151ABB64}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

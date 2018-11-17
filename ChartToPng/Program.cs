@@ -1,15 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GalaSoft.MvvmLight;
+using System.Diagnostics;
 
 namespace ChartToPng
 {
-    class Program
+    public class Program : ViewModelBase
     {
-        static void Main(string[] args)
+        private string _image;
+        public string Image
         {
+            get => _image;
+            set
+            {
+                _image = value;
+                RaisePropertyChanged();
+            }
+        }
+        public Program()
+        {
+            Image = "/png/test.jpg";
+            Trace.WriteLine("Started!");
         }
     }
 }
