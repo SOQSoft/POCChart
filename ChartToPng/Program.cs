@@ -22,12 +22,13 @@ namespace ChartToPng
             Image = "/png/test.jpg";
 
             LineChart chart = new LineChart("Test");
-            chart.AddSeries("test", new List<ObservablePoint>()
+            List <ObservablePoint> list = new List<ObservablePoint>()
             {
                 new ObservablePoint(0,0),
                 new ObservablePoint(1,1),
-                new ObservablePoint(2,1),
-            });
+                new ObservablePoint(2,1)
+            };
+            chart.AddSeries("test", list);
             string path = "png/myImage.png";
             chart.CreatePNG(path);
             Image = path;
