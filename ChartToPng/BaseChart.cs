@@ -4,6 +4,7 @@ using LiveCharts.Wpf.Charts.Base;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -12,11 +13,13 @@ namespace ChartToPng
     public abstract class BaseChart<T>
     {
         private Chart _chart;
+        public string Title {get; set;}
 
         public BaseChart(string title)
         {
+            Title = title;
             _chart = CreateChart();
-            SetupChart(title);
+            SetupChart();
             AfterSetupChart(_chart);
 
             /*
@@ -31,7 +34,7 @@ namespace ChartToPng
         }
 
         protected abstract Chart CreateChart();
-        private void SetupChart(string title)
+        private void SetupChart()
         {
             _chart.DisableAnimations = true;
             DefaultLegend legend = new DefaultLegend();
@@ -74,26 +77,51 @@ namespace ChartToPng
 
         public MemoryStream CreatePNGStream()
         {
-            Window window = new Window() { Content = _chart };
-            window.WindowStyle = WindowStyle.None;
-            window.AllowsTransparency = true;
-            window.Width = 800;
-            window.Height = 400;
-            window.Opacity = 0.001;
-            window.Show();
-            _chart.Update(true, true); //force chart redraw
-            window.UpdateLayout();
-
+            Window window = CreateAndShowWindow();
             var encoder = new PngBitmapEncoder();
-            var bitmap = new RenderTargetBitmap((int)_chart.ActualWidth, (int)_chart.ActualHeight, 96, 96, PixelFormats.Pbgra32);
-            bitmap.Render(_chart);
-            window.Close();
+            var bitmap = new RenderTargetBitmap((int)window.ActualWidth, (int)window.ActualHeight, 96, 96, PixelFormats.Pbgra32);
+            bitmap.Render(window);
+            //window.Close();
 
             var frame = BitmapFrame.Create(bitmap);
             encoder.Frames.Add(frame);
             MemoryStream stream = new MemoryStream();
             encoder.Save(stream);
             return stream;
+        }
+
+        private Window CreateAndShowWindow()
+        {
+            Label title = new Label() { Content = Title };
+
+            Grid grid = new Grid();
+            ColumnDefinition column = new ColumnDefinition();
+            column.Width = new GridLength(1, GridUnitType.Star);
+            grid.ColumnDefinitions.Add(column);
+
+            RowDefinition row = new RowDefinition();
+            row.Height = new GridLength(1, GridUnitType.Auto);
+            grid.RowDefinitions.Add(row);
+            row = new RowDefinition();
+            row.Height = new GridLength(1, GridUnitType.Star);
+            grid.RowDefinitions.Add(row);
+
+            Grid.SetRow(title, 0);
+            Grid.SetColumn(title, 0);
+            Grid.SetRow(_chart, 1);
+            Grid.SetColumn(_chart, 1);
+
+            Window window = new Window() { Content = grid };
+            window.WindowStyle = WindowStyle.None;
+            window.AllowsTransparency = true;
+            window.Width = 800;
+            window.Height = 400;
+            //window.Opacity = 0.001;
+            window.Show();
+            _chart.Update(true, true); //force chart redraw
+            window.UpdateLayout();
+
+            return window;
         }
 
         public void CreatePNG(string path)
