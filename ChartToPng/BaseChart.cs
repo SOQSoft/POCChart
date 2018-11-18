@@ -34,7 +34,9 @@ namespace ChartToPng
         private void SetupChart(string title)
         {
             _chart.DisableAnimations = true;
-            _chart.ChartLegend = new DefaultLegend();
+            DefaultLegend legend = new DefaultLegend();
+            legend.Series = new List<SeriesViewModel>();
+            _chart.ChartLegend = legend;
             _chart.LegendLocation = LegendLocation.Right;
         }
         protected virtual void AfterSetupChart(Chart chart)
@@ -55,8 +57,15 @@ namespace ChartToPng
             ChartValues<T> values = new ChartValues<T>();
             values.AddRange(data);
             series.Values = values;
+            series.Title = title;
             _chart.Series.Add(series);
-            ((DefaultLegend)_chart.ChartLegend).Series.Add(series);
+            SeriesViewModel legendSeries = new SeriesViewModel();
+            legendSeries.Fill = series.Fill;
+            legendSeries.PointGeometry = series.PointGeometry;
+            legendSeries.Stroke = series.Stroke;
+            legendSeries.StrokeThickness = series.StrokeThickness;
+            legendSeries.Title = series.Title;
+            ((DefaultLegend)_chart.ChartLegend).Series.Add(new SeriesViewModel());
         }
         protected virtual void AfterSetupSeries(Series series)
         {
