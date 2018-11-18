@@ -1,4 +1,5 @@
-﻿using LiveCharts.Defaults;
+﻿using LiveCharts;
+using LiveCharts.Defaults;
 using LiveCharts.Wpf;
 using LiveCharts.Wpf.Charts.Base;
 using System;
@@ -21,7 +22,11 @@ namespace ChartToPng
             return new CartesianChart();
         }
 
-        protected override Series CreateSeries(List<ObservablePoint> Data)
+        protected override void AfterSetupChart(Chart chart)
+        {
+        }
+
+        protected override Series CreateSeries()
         {
             return new LineSeries();
         }
