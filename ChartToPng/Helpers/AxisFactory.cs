@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace ChartToPng.Helpers
 {
@@ -18,6 +19,12 @@ namespace ChartToPng.Helpers
         public double MinRange { get; set; } = double.MinValue;
         public string Title { get; set; }
         public double Unit { get; set; } = 1;
+        public double TickStep { get; set; } = double.NaN;
+        public bool TickLines { get; set; } = true;
+
+        private static SolidColorBrush LineColor = new SolidColorBrush(Color.FromRgb(100, 100, 100));
+        private static SolidColorBrush NoColor = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
+
 
         public Axis Create()
         {
@@ -30,7 +37,12 @@ namespace ChartToPng.Helpers
                 MaxRange = MaxRange,
                 MinRange = MinRange,
                 Title = Title,
-                Unit = Unit
+                Unit = Unit,
+                Separator = new Separator()
+                {
+                    Step = TickStep,
+                    StrokeThickness = TickLines ? 2 : 0
+                } 
             };
         }
     }

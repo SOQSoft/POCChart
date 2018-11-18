@@ -35,6 +35,7 @@ namespace ChartToPng
             points.Add(new ObservablePoint(5, 2453));
             lineChart.AddSeries("Sales", points);
             lineChart.YAxis = new AxisFactory() { MinValue = 0, LabelFormatter = d => string.Join(string.Empty, '€', d) };
+            lineChart.XAxis = new AxisFactory() { TickLines = false };
             lineChart.CreatePNG("png/myImage0.png");
 
             BarChart<ObservableValue> barChart = new BarChart<ObservableValue>("Bar Chart Demo");
@@ -49,7 +50,9 @@ namespace ChartToPng
             barChart.XAxis = new AxisFactory()
             {
                 Labels = new List<string>() { "Darryll", "Guus", "Bart", "Aaron", "Simon", "Stan" },
-                Title = "Inspecteurs"
+                Title = "Inspecteurs",
+                TickLines = false,
+                TickStep = 1
             };
             barChart.YAxis = new AxisFactory() { Title = "Aantal" };
             barChart.CreatePNG("png/myImage1.png");
