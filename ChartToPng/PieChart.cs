@@ -20,6 +20,7 @@ namespace ChartToPng
         public PieChartGenerator()
         {
             pieChart1 = new PieChart();
+            pieChart1.DisableAnimations = true;
             Func<ChartPoint, string> labelPoint = chartPoint =>
                 string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
 
@@ -72,7 +73,7 @@ namespace ChartToPng
             var viewbox = new Viewbox();
             viewbox.Child = myChart;
             viewbox.Measure(myChart.RenderSize);
-            viewbox.Arrange(new Rect(new Point(0, 0), new Point(500, 500)));
+            viewbox.Arrange(new Rect(new Point(0, 0), myChart.RenderSize));
             myChart.Update(true, true); //force chart redraw
             viewbox.UpdateLayout();
 
@@ -88,7 +89,8 @@ namespace ChartToPng
 
         private static void EncodeVisual(FrameworkElement visual, string fileName, BitmapEncoder encoder)
         {
-            var bitmap = new RenderTargetBitmap((int)visual.ActualWidth, (int)visual.ActualHeight, 96, 96, PixelFormats.Pbgra32);
+            //var bitmap = new RenderTargetBitmap((int)visual.ActualWidth, (int)visual.ActualHeight, 96, 96, PixelFormats.Pbgra32);
+            var bitmap = new RenderTargetBitmap(500, 500, 96, 96, PixelFormats.Pbgra32);
             bitmap.Render(visual);
             var frame = BitmapFrame.Create(bitmap);
             encoder.Frames.Add(frame);
