@@ -11,12 +11,13 @@ using System.Threading.Tasks;
 
 namespace ChartToPng
 {
-    public abstract class BaseChartFactory
+    public abstract class BaseChart
     {
         protected Chart _chart;
 
-        public BaseChartFactory()
+        public BaseChart(string title)
         {
+            /*
             CreateChart();
             SetupChart();
 
@@ -26,26 +27,11 @@ namespace ChartToPng
             series.Values = values;
             
             new CartesianChart().Series.Add(new LineSeries());
+            */
+            
         }
 
-        private void SetupChart()
-        {
-            throw new NotImplementedException();
-        }
-
-        protected abstract void CreateChart();
-
-        public void StartNewSeries(string title)
-        {
-            CreateSeries();
-            SetupSeries();
-        }
-
-        protected abstract void CreateSeries();
-        private void SetupSeries()
-        {
-            throw new NotImplementedException();
-        }
+        protected abstract void AddSeries(string title, List<object> data);
 
         public void CreatePNG(string path)
         {
