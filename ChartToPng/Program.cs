@@ -2,6 +2,7 @@
 using LiveCharts.Defaults;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Windows;
 
 namespace ChartToPng
 {
@@ -28,7 +29,7 @@ namespace ChartToPng
             points.Add(new ObservablePoint(3, 0));
             points.Add(new ObservablePoint(4, 2));
             points.Add(new ObservablePoint(5, 2));
-            lineChart.AddSeries("title", points);
+            lineChart.AddSeries("Sales", points);
             lineChart.CreatePNG("png/myImage0.png");
 
 
@@ -40,7 +41,7 @@ namespace ChartToPng
             values.Add(new ObservableValue(0));
             values.Add(new ObservableValue(2));
             values.Add(new ObservableValue(2));
-            barChart.AddSeries("title", values);
+            barChart.AddSeries("Inspecties", values);
             barChart.CreatePNG("png/myImage1.png");
 
             PieChart pieChart = new PieChart("test2");
@@ -49,6 +50,8 @@ namespace ChartToPng
             pieChart.AddSeries("Frida", new List<ObservableValue>() { new ObservableValue(6) });
             pieChart.AddSeries("Frederic", new List<ObservableValue>() { new ObservableValue(2) });
             pieChart.CreatePNG("png/myImage2.png");
+
+            //Application.Current.Shutdown();
         }
 	}
 }

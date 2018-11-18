@@ -5,8 +5,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Xml;
 
 namespace ChartToPng
 {
@@ -79,10 +81,10 @@ namespace ChartToPng
         public MemoryStream CreatePNGStream()
         {
             Window window = CreateAndShowWindow();
+            Grid grid = (Grid) window.Content;
             var encoder = new PngBitmapEncoder();
-            //window in next two lines below was _chart.
-            var bitmap = new RenderTargetBitmap((int)_chart.ActualWidth, (int)_chart.ActualHeight, 96, 96, PixelFormats.Pbgra32);
-            bitmap.Render(_chart);
+            var bitmap = new RenderTargetBitmap((int)grid.ActualWidth, (int)grid.ActualHeight, 96, 96, PixelFormats.Pbgra32);
+            bitmap.Render(grid);
             window.Close();
 
             var frame = BitmapFrame.Create(bitmap);
@@ -94,8 +96,10 @@ namespace ChartToPng
 
         private Window CreateAndShowWindow()
         {
-            /*
             Label title = new Label() { Content = Title };
+            title.Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 0));
+            title.FontSize = 25;
+            title.HorizontalAlignment = HorizontalAlignment.Center;
 
             Grid grid = new Grid();
             ColumnDefinition column = new ColumnDefinition();
@@ -103,23 +107,21 @@ namespace ChartToPng
             grid.ColumnDefinitions.Add(column);
 
             RowDefinition row = new RowDefinition();
-            row.Height = new GridLength(1, GridUnitType.Auto);
+            row.Height = GridLength.Auto;
             grid.RowDefinitions.Add(row);
             row = new RowDefinition();
             row.Height = new GridLength(1, GridUnitType.Star);
             grid.RowDefinitions.Add(row);
-
-            Grid.SetRow(title, 0);
-            Grid.SetColumn(title, 0);
+           
             Grid.SetRow(_chart, 1);
-            Grid.SetColumn(_chart, 1);
-            */
-            //Everything above can be deleted, content = _chart
-            Window window = new Window() { Content = _chart };
+            grid.Children.Add(title);
+            grid.Children.Add(_chart);
+            
+            Window window = new Window() { Content = grid };
             window.WindowStyle = WindowStyle.None;
             window.AllowsTransparency = true;
-            window.Width = 800;
-            window.Height = 500;
+            window.Width = 500;
+            window.Height = 300;
             window.Opacity = 0.001;
             window.Show();
             _chart.Update(true, true); //force chart redraw
@@ -140,6 +142,11 @@ namespace ChartToPng
             graph.Close();
             file.Dispose();
             graph.Dispose();
+        }
+
+        public C CopyChart()
+        {
+            return (C)XamlReader.Load(new XmlTextReader(new StringReader(XamlWriter.Save(_chart))));
         }
 	}
 }

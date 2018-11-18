@@ -39,7 +39,7 @@ namespace ChartToPng
         {
             if (_pushOut)
             {
-                series.PushOut = 10;
+                series.PushOut = 15;
                 _pushOut = false;
             }
             series.LabelPoint = labelPoint;
