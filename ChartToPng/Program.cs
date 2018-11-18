@@ -20,15 +20,35 @@ namespace ChartToPng
 		}
 		public Program()
 		{
-			BarChart barChart = new BarChart("Test1");
-			int[] ints = new int[] { 10, 30, 40, 70, 80, 140, 180 };
-			List<ObservableValue> list = new List<ObservableValue>();
-			foreach (int i in ints)
-				list.Add(new ObservableValue(i));
-			barChart.AddSeries("Appels", list);
-			barChart.ShowWindow();
-			Image = "/png/test.jpg";
-			Trace.WriteLine("Started!");
-		}
+            LineChart lineChart = new LineChart("test0");
+            List<ObservablePoint> points = new List<ObservablePoint>();
+            points.Add(new ObservablePoint(0, 2));
+            points.Add(new ObservablePoint(1, 1));
+            points.Add(new ObservablePoint(2, 1));
+            points.Add(new ObservablePoint(3, 0));
+            points.Add(new ObservablePoint(4, 2));
+            points.Add(new ObservablePoint(5, 2));
+            lineChart.AddSeries("title", points);
+            lineChart.CreatePNG("png/myImage0.png");
+
+
+            BarChart barChart = new BarChart("test1");
+            List<ObservableValue> values = new List<ObservableValue>();
+            values.Add(new ObservableValue(2));
+            values.Add(new ObservableValue(1));
+            values.Add(new ObservableValue(1));
+            values.Add(new ObservableValue(0));
+            values.Add(new ObservableValue(2));
+            values.Add(new ObservableValue(2));
+            barChart.AddSeries("title", values);
+            barChart.CreatePNG("png/myImage1.png");
+
+            PieChart pieChart = new PieChart("test2");
+            pieChart.AddSeries("Maria", new List<ObservableValue>() { new ObservableValue(3) });
+            pieChart.AddSeries("Charles", new List<ObservableValue>() { new ObservableValue(4) });
+            pieChart.AddSeries("Frida", new List<ObservableValue>() { new ObservableValue(6) });
+            pieChart.AddSeries("Frederic", new List<ObservableValue>() { new ObservableValue(2) });
+            pieChart.CreatePNG("png/myImage2.png");
+        }
 	}
 }

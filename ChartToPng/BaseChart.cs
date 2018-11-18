@@ -10,9 +10,11 @@ using System.Windows.Media.Imaging;
 
 namespace ChartToPng
 {
-    public abstract class BaseChart<T>
+    public abstract class BaseChart<C, S, V> 
+        where C : Chart 
+        where S : Series
     {
-        private Chart _chart;
+        private C _chart;
         public string Title {get; set;}
 
         public BaseChart(string title)
@@ -32,7 +34,7 @@ namespace ChartToPng
             */
 		}
 
-        protected abstract Chart CreateChart();
+        protected abstract C CreateChart();
         private void SetupChart()
         {
             _chart.DisableAnimations = true;
@@ -41,22 +43,22 @@ namespace ChartToPng
             _chart.ChartLegend = legend;
             _chart.LegendLocation = LegendLocation.Right;
         }
-        protected virtual void AfterSetupChart(Chart chart)
+        protected virtual void AfterSetupChart(C chart)
         {
 
         }
 
-        public void AddSeries(string title, List<T> data)
+        public void AddSeries(string title, List<V> data)
         {
-            Series series = CreateSeries();
+            S series = CreateSeries();
             SetupSeries(series, title, data);
             AfterSetupSeries(series);
         }
 
-        protected abstract Series CreateSeries();
-        private void SetupSeries(Series series, string title, List<T> data)
+        protected abstract S CreateSeries();
+        private void SetupSeries(S series, string title, List<V> data)
         {
-            ChartValues<T> values = new ChartValues<T>();
+            ChartValues<V> values = new ChartValues<V>();
             values.AddRange(data);
             series.Values = values;
             series.Title = title;
@@ -69,7 +71,7 @@ namespace ChartToPng
             legendSeries.Title = series.Title;
             ((DefaultLegend)_chart.ChartLegend).Series.Add(new SeriesViewModel());
         }
-        protected virtual void AfterSetupSeries(Series series)
+        protected virtual void AfterSetupSeries(S series)
         {
 
         }
@@ -79,9 +81,9 @@ namespace ChartToPng
             Window window = CreateAndShowWindow();
             var encoder = new PngBitmapEncoder();
             //window in next two lines below was _chart.
-            var bitmap = new RenderTargetBitmap((int)window.ActualWidth, (int)window.ActualHeight, 96, 96, PixelFormats.Pbgra32);
-            bitmap.Render(window);
-            //window.Close();
+            var bitmap = new RenderTargetBitmap((int)_chart.ActualWidth, (int)_chart.ActualHeight, 96, 96, PixelFormats.Pbgra32);
+            bitmap.Render(_chart);
+            window.Close();
 
             var frame = BitmapFrame.Create(bitmap);
             encoder.Frames.Add(frame);
@@ -92,6 +94,7 @@ namespace ChartToPng
 
         private Window CreateAndShowWindow()
         {
+            /*
             Label title = new Label() { Content = Title };
 
             Grid grid = new Grid();
@@ -110,14 +113,14 @@ namespace ChartToPng
             Grid.SetColumn(title, 0);
             Grid.SetRow(_chart, 1);
             Grid.SetColumn(_chart, 1);
-
+            */
             //Everything above can be deleted, content = _chart
-            Window window = new Window() { Content = grid };
+            Window window = new Window() { Content = _chart };
             window.WindowStyle = WindowStyle.None;
             window.AllowsTransparency = true;
             window.Width = 800;
-            window.Height = 400;
-            //window.Opacity = 0.001;
+            window.Height = 500;
+            window.Opacity = 0.001;
             window.Show();
             _chart.Update(true, true); //force chart redraw
             window.UpdateLayout();
@@ -138,20 +141,5 @@ namespace ChartToPng
             file.Dispose();
             graph.Dispose();
         }
-
-		public void AddLabels(string[] labels, string title)
-		{
-			_chart.AxisX.Add(new Axis() { Title = title, Labels = labels });
-		}
-
-		public void ShowWindow()
-		{
-			Window window = new Window() { Content = _chart };
-			window.WindowStyle = WindowStyle.None;
-			window.AllowsTransparency = true;
-			window.Width = 800;
-			window.Height = 500;
-			window.Show();
-		}
 	}
 }

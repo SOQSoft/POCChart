@@ -9,8 +9,5 @@
         Title="MainWindow" Height="650" Width="800"
         DataContext="{StaticResource Program}">
 
-    <StackPanel>
-        <lvc:PieChart LegendLocation="Bottom" Hoverable="False" DataTooltip="{x:Null}" Height="500" Width="500"/>
-        <Button Content="Generate image" Width="200" Command="{Binding generateImage}"/>
-    </StackPanel>
+    <Image Source="{Binding Image}"/>
 </Window>

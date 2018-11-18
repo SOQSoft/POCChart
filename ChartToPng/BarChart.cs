@@ -8,24 +8,26 @@ using System.Windows;
 
 namespace ChartToPng
 {
-	public class BarChart : BaseChart<ObservableValue>
+	public class BarChart : BaseChart<CartesianChart, ColumnSeries, ObservableValue>
 	{
 		public BarChart(string title) : base(title)
 		{
 			
 		}
 
-		protected override Chart CreateChart()
+		protected override CartesianChart CreateChart()
 		{
 			return new CartesianChart();
 		}
 
-		protected override Series CreateSeries(List<ObservableValue> Data)
+        protected override void AfterSetupChart(CartesianChart chart)
+        {
+            //chart.AxisX.Add(new Axis() { Title = title, Labels = labels });
+        }
+
+        protected override ColumnSeries CreateSeries()
 		{
-			return new ColumnSeries
-			{
-				Values = new ChartValues<ObservableValue>(Data)
-			};
+            return new ColumnSeries();
 		}
 	}
 }

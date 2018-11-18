@@ -10,23 +10,19 @@ using System.Threading.Tasks;
 
 namespace ChartToPng
 {
-    public class LineChart : BaseChart<ObservablePoint>
+    public class LineChart : BaseChart<CartesianChart, LineSeries, ObservablePoint>
     {
         public LineChart(string title) : base(title)
         {
 
         }
 
-        protected override Chart CreateChart()
+        protected override CartesianChart CreateChart()
         {
             return new CartesianChart();
         }
 
-        protected override void AfterSetupChart(Chart chart)
-        {
-        }
-
-        protected override Series CreateSeries()
+        protected override LineSeries CreateSeries()
         {
             return new LineSeries();
         }
