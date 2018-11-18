@@ -25,7 +25,7 @@ namespace ChartToPng
         }
         public Program()
         {
-            Image = "/png/test.jpg";
+            //Image = "/png/test.jpg";
             Trace.WriteLine("Started!");
             generator = new PieChartGenerator();
             chart = generator.getChart();
@@ -35,7 +35,9 @@ namespace ChartToPng
 
         public void Render()
         {
-            generator.RenderChartImage();
+            string path = "C:/Temp/myImage.png";
+            generator.CreatePNG(path);
+            Image = path;
         }
     }
 }
