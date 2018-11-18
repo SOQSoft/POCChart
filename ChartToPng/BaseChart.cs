@@ -2,6 +2,7 @@
 using LiveCharts.Wpf.Charts.Base;
 using System.Collections.Generic;
 using System.IO;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -16,7 +17,7 @@ namespace ChartToPng
             _chart = CreateChart();
             SetupChart(title);
 
-            /*
+			/*
             ChartValues<ObservablePoint> values = new ChartValues<ObservablePoint>();
             LineSeries series = new LineSeries();
             values.Add(new ObservablePoint(0, 0));
@@ -24,8 +25,7 @@ namespace ChartToPng
 
             new CartesianChart().Series.Add(new LineSeries());
             */
-
-        }
+		}
 
         protected abstract Chart CreateChart();
         protected virtual void SetupChart(string title)
@@ -69,5 +69,20 @@ namespace ChartToPng
             pngEncoder.Save(stream);
             return stream;
         }
-    }
+
+		public void AddLabels(string[] labels, string title)
+		{
+			_chart.AxisX.Add(new Axis() { Title = title, Labels = labels });
+		}
+
+		public void ShowWindow()
+		{
+			Window window = new Window() { Content = _chart };
+			window.WindowStyle = WindowStyle.None;
+			window.AllowsTransparency = true;
+			window.Width = 800;
+			window.Height = 500;
+			window.Show();
+		}
+	}
 }
