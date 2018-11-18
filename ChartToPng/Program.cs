@@ -51,7 +51,7 @@ namespace ChartToPng
             pieChart.AddSeries("Frederic", new List<ObservableValue>() { new ObservableValue(2) });
             pieChart.CreatePNG("png/myImage2.png");
 
-            //Application.Current.Shutdown();
+            Application.Current.Shutdown();
         }
 	}
 }
