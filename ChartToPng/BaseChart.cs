@@ -31,7 +31,7 @@ namespace ChartToPng
             
         }
 
-        protected abstract void AddSeries(string title, List<object> data);
+        public abstract void AddSeries(string title, List<object> data);
 
         public void CreatePNG(string path)
         {
