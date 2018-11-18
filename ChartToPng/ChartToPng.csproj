@@ -88,6 +88,7 @@
     </Compile>
     <Compile Include="BarChart.cs" />
     <Compile Include="BaseChart.cs" />
+    <Compile Include="LineChart.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -124,5 +125,6 @@
   <ItemGroup>
     <Resource Include="png\test.jpg" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

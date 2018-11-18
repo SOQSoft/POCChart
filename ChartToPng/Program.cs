@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
+using LiveCharts.Defaults;
 using System.Collections.Generic;
 using System.Diagnostics;
 
