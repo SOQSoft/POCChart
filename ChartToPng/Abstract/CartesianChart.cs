@@ -32,13 +32,6 @@ namespace ChartToPng.Abstract
         {
         }
 
-        protected override sealed CartesianChart CreateChart()
-        {
-            return new CartesianChart();
-        }
-
-
-
         protected override abstract S CreateSeries();
     }
 }

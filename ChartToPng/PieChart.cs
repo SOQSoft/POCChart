@@ -26,11 +26,6 @@ namespace ChartToPng
         {
         }
 
-        protected override LiveCharts.Wpf.PieChart CreateChart()
-        {
-            return new LiveCharts.Wpf.PieChart();
-        }
-
         protected override PieSeries CreateSeries()
         {
             return new PieSeries();

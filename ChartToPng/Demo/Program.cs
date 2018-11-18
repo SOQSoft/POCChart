@@ -2,29 +2,56 @@
 using ChartToPng.Helpers;
 using GalaSoft.MvvmLight;
 using LiveCharts.Defaults;
+using LiveCharts.Wpf.Charts.Base;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace ChartToPng
 {
 	public class Program : ViewModelBase
 	{
-		private string _image;
+		private ChartDisplay _chart0;
 
-		public string Image
+		public ChartDisplay Chart0
 		{
-			get => _image;
+			get => _chart0;
 			set
 			{
-				_image = value;
+                _chart0 = value;
+				RaisePropertyChanged();
+			}
+		}
+
+        private ChartDisplay _chart1;
+
+		public ChartDisplay Chart1
+		{
+			get => _chart1;
+			set
+			{
+                _chart1 = value;
+				RaisePropertyChanged();
+			}
+		}
+
+        private ChartDisplay _chart2;
+
+		public ChartDisplay Chart2
+		{
+			get => _chart2;
+			set
+			{
+                _chart2 = value;
 				RaisePropertyChanged();
 			}
 		}
 		public Program()
 		{
-            Image = "Demo/test.jpg";
-            
             LineChart<ObservablePoint> lineChart = new LineChart<ObservablePoint>("Line Chart Demo");
             List<ObservablePoint> points = new List<ObservablePoint>();
             points.Add(new ObservablePoint(0, 2422));
@@ -64,7 +91,9 @@ namespace ChartToPng
             pieChart.AddSeries("Frederic", new List<ObservableValue>() { new ObservableValue(2) });
             pieChart.CreatePNG("png/myImage2.png");
 
-            Application.Current.Shutdown();
+            Chart0 = lineChart.Display;
+            Chart1 = barChart.Display;
+            Chart2 = pieChart.Display;
         }
 	}
 }

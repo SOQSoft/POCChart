@@ -1,4 +1,5 @@
-﻿using LiveCharts;
+﻿using ChartToPng.Helpers;
+using LiveCharts;
 using LiveCharts.Wpf;
 using LiveCharts.Wpf.Charts.Base;
 using System;
@@ -14,30 +15,19 @@ using System.Xml;
 namespace ChartToPng.Abstract
 {
     public abstract class BaseChart<C, S, V> 
-        where C : Chart 
+        where C : Chart, new()
         where S : Series
     {
-        protected C Chart { get; }
-        public string Title {get; set;}
+        public C Chart { get; private set;  }
+        public ChartDisplay Display { get; private set; }
 
         public BaseChart(string title)
         {
-            Title = title;
-            Chart = CreateChart();
+            Chart = new C();
+            Display = new ChartDisplay(Chart, title);
             SetupChart();
-            AfterSetupChart(Chart);
-
-			/*
-            ChartValues<ObservablePoint> values = new ChartValues<ObservablePoint>();
-            LineSeries series = new LineSeries();
-            values.Add(new ObservablePoint(0, 0));
-            series.Values = values;
-
-            new CartesianChart().Series.Add(new LineSeries());
-            */
 		}
-
-        protected abstract C CreateChart();
+        
         private void SetupChart()
         {
             Chart.DisableAnimations = true;
@@ -45,10 +35,6 @@ namespace ChartToPng.Abstract
             legend.Series = new List<SeriesViewModel>();
             Chart.ChartLegend = legend;
             Chart.LegendLocation = LegendLocation.Right;
-        }
-        protected virtual void AfterSetupChart(C chart)
-        {
-
         }
 
         public void AddSeries(string title, List<V> data)
@@ -81,44 +67,9 @@ namespace ChartToPng.Abstract
 
         public MemoryStream CreatePNGStream()
         {
-            Window window = CreateAndShowWindow();
-            Grid grid = (Grid) window.Content;
-            var encoder = new PngBitmapEncoder();
-            var bitmap = new RenderTargetBitmap((int)grid.ActualWidth, (int)grid.ActualHeight, 96, 96, PixelFormats.Pbgra32);
-            bitmap.Render(grid);
-            window.Close();
-
-            var frame = BitmapFrame.Create(bitmap);
-            encoder.Frames.Add(frame);
-            MemoryStream stream = new MemoryStream();
-            encoder.Save(stream);
-            return stream;
-        }
-
-        private Window CreateAndShowWindow()
-        {
-            Label title = new Label() { Content = Title };
-            title.Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 0));
-            title.FontSize = 25;
-            title.HorizontalAlignment = HorizontalAlignment.Center;
-
-            Grid grid = new Grid();
-            ColumnDefinition column = new ColumnDefinition();
-            column.Width = new GridLength(1, GridUnitType.Star);
-            grid.ColumnDefinitions.Add(column);
-
-            RowDefinition row = new RowDefinition();
-            row.Height = GridLength.Auto;
-            grid.RowDefinitions.Add(row);
-            row = new RowDefinition();
-            row.Height = new GridLength(1, GridUnitType.Star);
-            grid.RowDefinitions.Add(row);
-           
-            Grid.SetRow(Chart, 1);
-            grid.Children.Add(title);
-            grid.Children.Add(Chart);
-            
-            Window window = new Window() { Content = grid };
+            //Create Window
+            Display.Detach();
+            Window window = new Window() { Content = Display.Panel };
             window.WindowStyle = WindowStyle.None;
             window.AllowsTransparency = true;
             window.Width = 500;
@@ -128,7 +79,20 @@ namespace ChartToPng.Abstract
             Chart.Update(true, true); //force chart redraw
             window.UpdateLayout();
 
-            return window;
+            //Render Bitmap
+            var encoder = new PngBitmapEncoder();
+            var bitmap = new RenderTargetBitmap((int)Display.Panel.ActualWidth, (int)Display.Panel.ActualHeight, 96, 96, PixelFormats.Pbgra32);
+            bitmap.Render(Display.Panel);
+            window.Close();
+            window.Content = null;
+            Display.Attach();
+
+            //Create PNG
+            var frame = BitmapFrame.Create(bitmap);
+            encoder.Frames.Add(frame);
+            MemoryStream stream = new MemoryStream();
+            encoder.Save(stream);
+            return stream;
         }
 
         public void CreatePNG(string path)
@@ -144,12 +108,5 @@ namespace ChartToPng.Abstract
             file.Dispose();
             graph.Dispose();
         }
-
-        public C CopyChart()
-        {
-            C c = (C)XamlReader.Load(new XmlTextReader(new StringReader(XamlWriter.Save(Chart))));
-            c.DisableAnimations = false;
-            return c;
-        }
-	}
+    }
 }

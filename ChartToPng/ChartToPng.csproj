@@ -90,6 +90,7 @@
     <Compile Include="BarChart.cs" />
     <Compile Include="Abstract\BaseChart.cs" />
     <Compile Include="Abstract\CartesianChart.cs" />
+    <Compile Include="Helpers\ChartDisplay.cs" />
     <Compile Include="LineChart.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -124,9 +125,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Demo\test.jpg" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -6,8 +6,21 @@
         xmlns:local="clr-namespace:ChartToPng"
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="250" Width="400"
+        Title="MainWindow" Height="300" Width="520"
         DataContext="{StaticResource Program}">
-
-    <Image Source="{Binding Image}"/>
+    <ScrollViewer>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="250"/>
+                <RowDefinition Height="250"/>
+                <RowDefinition Height="250"/>
+            </Grid.RowDefinitions>
+            <ContentControl Grid.Row="0" Content="{Binding Chart0}" />
+            <ContentControl Grid.Row="1" Content="{Binding Chart1}" />
+            <ContentControl Grid.Row="2" Content="{Binding Chart2}" />
+        </Grid>
+    </ScrollViewer>
 </Window>
