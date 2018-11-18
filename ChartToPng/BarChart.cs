@@ -22,7 +22,10 @@ namespace ChartToPng
 
 		protected override Series CreateSeries(List<ObservableValue> Data)
 		{
-			return new ColumnSeries(Data);
+			return new ColumnSeries
+			{
+				Values = new ChartValues<ObservableValue>(Data)
+			};
 		}
 	}
 }
