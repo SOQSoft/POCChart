@@ -10,7 +10,7 @@
         DataContext="{StaticResource Program}">
 
     <StackPanel>
-        <lvc:PieChart LegendLocation="Bottom" Hoverable="False" DataTooltip="{x:Null}" Series="{Binding PieSeries}" Height="500" Width="500"/>
+        <lvc:PieChart LegendLocation="Bottom" Hoverable="False" DataTooltip="{x:Null}" Height="500" Width="500"/>
         <Button Content="Generate image" Width="200" Command="{Binding generateImage}"/>
     </StackPanel>
 </Window>

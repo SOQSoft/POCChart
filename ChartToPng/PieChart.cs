@@ -72,7 +72,7 @@ namespace ChartToPng
             window.AllowsTransparency = true;
             window.Width = 800;
             window.Height = 400;
-            window.Opacity = 0.001;
+            //window.Opacity = 0.001;
             window.Show();
             pieChart1.Update(true, true); //force chart redraw
             window.UpdateLayout();
@@ -80,7 +80,7 @@ namespace ChartToPng
             var encoder = new PngBitmapEncoder();
             var bitmap = new RenderTargetBitmap((int)pieChart1.ActualWidth, (int)pieChart1.ActualHeight, 96, 96, PixelFormats.Pbgra32);
             bitmap.Render(pieChart1);
-            window.Close();
+            //window.Close();
 
             var frame = BitmapFrame.Create(bitmap);
             encoder.Frames.Add(frame);
