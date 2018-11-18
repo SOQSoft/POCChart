@@ -1,4 +1,7 @@
-﻿using LiveCharts;
+﻿using ChartToPng.Abstract;
+using ChartToPng.Helpers;
+using LiveCharts;
+using LiveCharts.Configurations;
 using LiveCharts.Defaults;
 using LiveCharts.Helpers;
 using LiveCharts.Wpf;
@@ -8,26 +11,16 @@ using System.Windows;
 
 namespace ChartToPng
 {
-	public class BarChart : BaseChart<CartesianChart, ColumnSeries, ObservableValue>
+	public class BarChart<V> : CartesianChart<ColumnSeries, V>
 	{
 		public BarChart(string title) : base(title)
 		{
 			
 		}
 
-		protected override CartesianChart CreateChart()
-		{
-			return new CartesianChart();
-		}
-
-        protected override void AfterSetupChart(CartesianChart chart)
-        {
-            //chart.AxisX.Add(new Axis() { Title = title, Labels = labels });
-        }
-
         protected override ColumnSeries CreateSeries()
 		{
             return new ColumnSeries();
 		}
-	}
+    }
 }

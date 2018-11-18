@@ -1,4 +1,7 @@
-﻿using LiveCharts;
+﻿using ChartToPng.Abstract;
+using ChartToPng.Helpers;
+using LiveCharts;
+using LiveCharts.Configurations;
 using LiveCharts.Defaults;
 using LiveCharts.Wpf;
 using LiveCharts.Wpf.Charts.Base;
@@ -10,16 +13,11 @@ using System.Threading.Tasks;
 
 namespace ChartToPng
 {
-    public class LineChart : BaseChart<CartesianChart, LineSeries, ObservablePoint>
+    public class LineChart<V> : CartesianChart<LineSeries, V>
     {
         public LineChart(string title) : base(title)
         {
 
-        }
-
-        protected override CartesianChart CreateChart()
-        {
-            return new CartesianChart();
         }
 
         protected override LineSeries CreateSeries()

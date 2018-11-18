@@ -82,12 +82,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="Helpers\AxisFactory.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="BarChart.cs" />
-    <Compile Include="BaseChart.cs" />
+    <Compile Include="Abstract\BaseChart.cs" />
+    <Compile Include="Abstract\CartesianChart.cs" />
     <Compile Include="LineChart.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -96,7 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PieChart.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Demo\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -124,7 +126,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="png\test.jpg" />
+    <Resource Include="Demo\test.jpg" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

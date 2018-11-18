@@ -1,6 +1,7 @@
 ﻿using LiveCharts;
 using LiveCharts.Wpf;
 using LiveCharts.Wpf.Charts.Base;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows;
@@ -10,21 +11,21 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml;
 
-namespace ChartToPng
+namespace ChartToPng.Abstract
 {
     public abstract class BaseChart<C, S, V> 
         where C : Chart 
         where S : Series
     {
-        private C _chart;
+        protected C Chart { get; }
         public string Title {get; set;}
 
         public BaseChart(string title)
         {
             Title = title;
-            _chart = CreateChart();
+            Chart = CreateChart();
             SetupChart();
-            AfterSetupChart(_chart);
+            AfterSetupChart(Chart);
 
 			/*
             ChartValues<ObservablePoint> values = new ChartValues<ObservablePoint>();
@@ -39,11 +40,11 @@ namespace ChartToPng
         protected abstract C CreateChart();
         private void SetupChart()
         {
-            _chart.DisableAnimations = true;
+            Chart.DisableAnimations = true;
             DefaultLegend legend = new DefaultLegend();
             legend.Series = new List<SeriesViewModel>();
-            _chart.ChartLegend = legend;
-            _chart.LegendLocation = LegendLocation.Right;
+            Chart.ChartLegend = legend;
+            Chart.LegendLocation = LegendLocation.Right;
         }
         protected virtual void AfterSetupChart(C chart)
         {
@@ -64,14 +65,14 @@ namespace ChartToPng
             values.AddRange(data);
             series.Values = values;
             series.Title = title;
-            _chart.Series.Add(series);
+            Chart.Series.Add(series);
             SeriesViewModel legendSeries = new SeriesViewModel();
             legendSeries.Fill = series.Fill;
             legendSeries.PointGeometry = series.PointGeometry;
             legendSeries.Stroke = series.Stroke;
             legendSeries.StrokeThickness = series.StrokeThickness;
             legendSeries.Title = series.Title;
-            ((DefaultLegend)_chart.ChartLegend).Series.Add(new SeriesViewModel());
+            ((DefaultLegend)Chart.ChartLegend).Series.Add(new SeriesViewModel());
         }
         protected virtual void AfterSetupSeries(S series)
         {
@@ -113,9 +114,9 @@ namespace ChartToPng
             row.Height = new GridLength(1, GridUnitType.Star);
             grid.RowDefinitions.Add(row);
            
-            Grid.SetRow(_chart, 1);
+            Grid.SetRow(Chart, 1);
             grid.Children.Add(title);
-            grid.Children.Add(_chart);
+            grid.Children.Add(Chart);
             
             Window window = new Window() { Content = grid };
             window.WindowStyle = WindowStyle.None;
@@ -124,7 +125,7 @@ namespace ChartToPng
             window.Height = 300;
             window.Opacity = 0.001;
             window.Show();
-            _chart.Update(true, true); //force chart redraw
+            Chart.Update(true, true); //force chart redraw
             window.UpdateLayout();
 
             return window;
@@ -146,7 +147,9 @@ namespace ChartToPng
 
         public C CopyChart()
         {
-            return (C)XamlReader.Load(new XmlTextReader(new StringReader(XamlWriter.Save(_chart))));
+            C c = (C)XamlReader.Load(new XmlTextReader(new StringReader(XamlWriter.Save(Chart))));
+            c.DisableAnimations = false;
+            return c;
         }
 	}
 }
