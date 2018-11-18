@@ -4,9 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChartToPng"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
+        Title="MainWindow" Height="650" Width="800"
         DataContext="{StaticResource Program}">
 
-    <Image Source="{Binding Image}"/>
+    <StackPanel>
+        <lvc:PieChart LegendLocation="Bottom" Hoverable="False" DataTooltip="{x:Null}" Series="{Binding PieSeries}" Height="200"/>
+        <Button Content="Generate image" Width="200" Command="{Binding generateImage}"/>
+    </StackPanel>
 </Window>
