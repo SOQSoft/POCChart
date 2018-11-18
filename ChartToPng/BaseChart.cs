@@ -79,6 +79,7 @@ namespace ChartToPng
         {
             Window window = CreateAndShowWindow();
             var encoder = new PngBitmapEncoder();
+            //window in next two lines below was _chart.
             var bitmap = new RenderTargetBitmap((int)window.ActualWidth, (int)window.ActualHeight, 96, 96, PixelFormats.Pbgra32);
             bitmap.Render(window);
             //window.Close();
@@ -111,6 +112,7 @@ namespace ChartToPng
             Grid.SetRow(_chart, 1);
             Grid.SetColumn(_chart, 1);
 
+            //Everything above can be deleted, content = _chart
             Window window = new Window() { Content = grid };
             window.WindowStyle = WindowStyle.None;
             window.AllowsTransparency = true;
