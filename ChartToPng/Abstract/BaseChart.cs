@@ -97,6 +97,8 @@ namespace ChartToPng.Abstract
 
         public void CreatePNG(string path)
         {
+            FileInfo info = new FileInfo(path);
+            if (!info.Exists) { info.Directory.Create(); }
             Stream file = File.Create(path);
             MemoryStream graph = CreatePNGStream();
             byte[] graphBytes = graph.ToArray();

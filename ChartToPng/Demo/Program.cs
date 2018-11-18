@@ -63,7 +63,7 @@ namespace ChartToPng
             lineChart.AddSeries("Sales", points);
             lineChart.YAxis = new AxisFactory() { MinValue = 0, LabelFormatter = d => string.Join(string.Empty, '€', d) };
             lineChart.XAxis = new AxisFactory() { TickLines = false };
-            lineChart.CreatePNG("png/myImage0.png");
+            lineChart.CreatePNG("Images/dem0.png");
 
             BarChart<ObservableValue> barChart = new BarChart<ObservableValue>("Bar Chart Demo");
             List<ObservableValue> values = new List<ObservableValue>();
@@ -82,18 +82,20 @@ namespace ChartToPng
                 TickStep = 1
             };
             barChart.YAxis = new AxisFactory() { Title = "Aantal" };
-            barChart.CreatePNG("png/myImage1.png");
+            barChart.CreatePNG("Images/demo1.png");
 
             PieChart pieChart = new PieChart("Pie Chart Demo");
             pieChart.AddSeries("Maria", new List<ObservableValue>() { new ObservableValue(3) });
             pieChart.AddSeries("Charles", new List<ObservableValue>() { new ObservableValue(4) });
             pieChart.AddSeries("Frida", new List<ObservableValue>() { new ObservableValue(6) });
             pieChart.AddSeries("Frederic", new List<ObservableValue>() { new ObservableValue(2) });
-            pieChart.CreatePNG("png/myImage2.png");
+            pieChart.CreatePNG("Images/demo2.png");
 
             Chart0 = lineChart.Display;
             Chart1 = barChart.Display;
             Chart2 = pieChart.Display;
+
+            Process.Start("Images");
         }
 	}
 }
